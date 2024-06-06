@@ -6,31 +6,29 @@ branding:
 author: 'CodeRabbit LLC'
 inputs:
   debug:
-    required: false
+    required: true
     description: 'Enable debug mode'
-    default: 'false'
+    default: false
   max_files:
     required: false
-    description:
-      'Max files to summarize and review. Less than or equal to 0 means no
-      limit.'
-    default: '150'
+    description: |
+      Max files to summarize and review. Less than or equal to 0 means no limit.
+    default: 150
   review_simple_changes:
-    required: false
+    required: true
     description: 'Review even when the changes are simple'
-    default: 'false'
+    default: false
   review_comment_lgtm:
     required: false
     description: 'Leave comments even if the patch is LGTM'
-    default: 'false'
+    default: false
   path_filters:
     required: false
     description: |
       The path filters, e.g., "src/**.py", "!dist/**", each line will be considered as one pattern.
       See also
-
-      - https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#onpushpull_requestpull_request_targetpathspaths-ignore
-      - https://github.com/isaacs/minimatch
+        - https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#onpushpull_requestpull_request_targetpathspaths-ignore
+        - https://github.com/isaacs/minimatch
     default: |
       !dist/**
       !**/*.app
@@ -139,19 +137,18 @@ inputs:
   disable_review:
     required: false
     description: 'Only provide the summary and skip the code review.'
-    default: 'false'
+    default: false
   disable_release_notes:
     required: false
     description: 'Disable release notes'
-    default: 'false'
+    default: false
   openai_base_url:
     required: false
     description: 'The url of the openai api interface.'
     default: 'https://api.openai.com/v1'
   openai_light_model:
     required: false
-    description:
-      'Model to use for simple tasks like summarizing diff on a file.'
+    description: 'Model to use for simple tasks like summarizing diff on a file.'
     default: 'gpt-3.5-turbo'
   openai_heavy_model:
     required: false
@@ -160,24 +157,23 @@ inputs:
   openai_model_temperature:
     required: false
     description: 'Temperature for GPT model'
-    default: '0.05'
+    default: 0.05
   openai_retries:
     required: false
-    description:
-      'How many times to retry OpenAI API in case of timeouts or errors?'
-    default: '5'
+    description: 'How many times to retry OpenAI API in case of timeouts or errors?'
+    default: 5
   openai_timeout_ms:
     required: false
     description: 'Timeout for OpenAI API call in millis'
-    default: '360000'
+    default: 360000
   openai_concurrency_limit:
     required: false
     description: 'How many concurrent API calls to make to OpenAI servers?'
-    default: '6'
+    default: 6
   github_concurrency_limit:
     required: false
     description: 'How many concurrent API calls to make to GitHub?'
-    default: '6'
+    default: 6
   system_message:
     required: false
     description: 'System message to be sent to OpenAI'
@@ -218,12 +214,9 @@ inputs:
 
       Avoid additional commentary as this summary will be added as a comment on the 
       GitHub pull request. Use the titles "Walkthrough" and "Changes" and they must be H2.
-
   summarize_release_notes:
     required: false
-    description:
-      'The prompt for generating release notes in the same chat as summarize
-      stage'
+    description: 'The prompt for generating release notes in the same chat as summarize stage'
     default: |
       Craft concise release notes for the pull request. 
       Focus on the purpose and user impact, categorizing changes as "New Feature", "Bug Fix", 
@@ -241,3 +234,6 @@ inputs:
 runs:
   using: 'node16'
   main: 'dist/index.js'
+on:
+  pull_request:
+    types: [opened, synchronize]
