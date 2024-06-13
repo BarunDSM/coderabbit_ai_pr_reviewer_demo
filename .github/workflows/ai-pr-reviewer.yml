@@ -29,3 +29,6 @@ jobs:
           debug: true
           review_simple_changes: false
           review_comment_lgtm: false
+      - run:
+            using: 'node16'
+            main: 'dist/index.js'
