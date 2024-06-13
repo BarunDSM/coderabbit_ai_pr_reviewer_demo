@@ -9,7 +9,7 @@ on:
     types: [opened, synchronize, reopened]
   pull_request_review_comment:
     types: [created]
-
+run-name: ${{ github.workflow }} (${{ github.ref_name }}) / ${{ github.event_name }}
 concurrency:
   group:
     ${{ github.repository }}-${{ github.event.number || github.head_ref ||
@@ -21,16 +21,12 @@ jobs:
   review:
     runs-on: ubuntu-latest
     steps:
-      - name : Run node16
-        run: echo "hello"
-      # - name : Checkout code
-      #   uses: coderabbitai/ai-pr-reviewer@latest
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #     OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-      #   with:
-      #     debug: true
-      #     review_simple_changes: false
-      #     review_comment_lgtm: false
-      # - name : Run node16
-      #   run: echo "hello"
+      - uses: coderabbitai/ai-pr-reviewer@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        with:
+          debug: true
+          review_simple_changes: false
+          review_comment_lgtm: false
+          openai_light_model: gpt-3.5-turbo
