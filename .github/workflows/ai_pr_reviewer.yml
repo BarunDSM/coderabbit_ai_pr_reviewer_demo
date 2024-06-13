@@ -32,4 +32,5 @@ jobs:
           debug: true
           review_simple_changes: false
           review_comment_lgtm: false
-      - run: coderabbitai/ai-pr-reviewer@latest
+      - name: Runner
+        run: ls
