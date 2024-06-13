@@ -6,29 +6,30 @@ branding:
 author: 'CodeRabbit LLC'
 inputs:
   debug:
-    required: true
+    required: false
     description: 'Enable debug mode'
-    default: false
+    default: 'false'
   max_files:
     required: false
-    description: |
-      Max files to summarize and review. Less than or equal to 0 means no limit.
-    default: 150
+    description: 'Max files to summarize and review. Less than or equal to 0 means no limit.'
+    default: '150'
+
   review_simple_changes:
-    required: true
+    required: false
     description: 'Review even when the changes are simple'
-    default: false
+    default: 'false'
   review_comment_lgtm:
     required: false
     description: 'Leave comments even if the patch is LGTM'
-    default: false
+    default: 'false'
   path_filters:
     required: false
     description: |
       The path filters, e.g., "src/**.py", "!dist/**", each line will be considered as one pattern.
       See also
-        - https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#onpushpull_requestpull_request_targetpathspaths-ignore
-        - https://github.com/isaacs/minimatch
+
+      - https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#onpushpull_requestpull_request_targetpathspaths-ignore
+      - https://github.com/isaacs/minimatch
     default: |
       !dist/**
       !**/*.app
@@ -137,18 +138,19 @@ inputs:
   disable_review:
     required: false
     description: 'Only provide the summary and skip the code review.'
-    default: false
+    default: 'false'
   disable_release_notes:
     required: false
     description: 'Disable release notes'
-    default: false
+    default: 'false'
   openai_base_url:
     required: false
     description: 'The url of the openai api interface.'
     default: 'https://api.openai.com/v1'
   openai_light_model:
     required: false
-    description: 'Model to use for simple tasks like summarizing diff on a file.'
+    description:
+      'Model to use for simple tasks like summarizing diff on a file.'
     default: 'gpt-3.5-turbo'
   openai_heavy_model:
     required: false
@@ -157,23 +159,24 @@ inputs:
   openai_model_temperature:
     required: false
     description: 'Temperature for GPT model'
-    default: 0.05
+    default: '0.05'
   openai_retries:
     required: false
-    description: 'How many times to retry OpenAI API in case of timeouts or errors?'
-    default: 5
+    description:
+      'How many times to retry OpenAI API in case of timeouts or errors?'
+    default: '5'
   openai_timeout_ms:
     required: false
     description: 'Timeout for OpenAI API call in millis'
-    default: 360000
+    default: '360000'
   openai_concurrency_limit:
     required: false
     description: 'How many concurrent API calls to make to OpenAI servers?'
-    default: 6
+    default: '6'
   github_concurrency_limit:
     required: false
     description: 'How many concurrent API calls to make to GitHub?'
-    default: 6
+    default: '6'
   system_message:
     required: false
     description: 'System message to be sent to OpenAI'
@@ -214,15 +217,24 @@ inputs:
 
       Avoid additional commentary as this summary will be added as a comment on the 
       GitHub pull request. Use the titles "Walkthrough" and "Changes" and they must be H2.
+
   summarize_release_notes:
     required: false
     description: 'The prompt for generating release notes in the same chat as summarize stage'
     default: |
-      Craft concise release notes for the pull request. 
-      Focus on the purpose and user impact, categorizing changes as "New Feature", "Bug Fix", 
-      "Documentation", "Refactor", "Style", "Test", "Chore", or "Revert". Provide a bullet-point list, 
-      e.g., "- New Feature: Added search functionality to the UI". Limit your response to 50-100 words 
-      and emphasize features visible to the end-user while omitting code-level details.
+      Craft concise release notes for the pull request.
+
+      Focus on the purpose and user impact, categorizing changes as "New
+      Feature", "Bug Fix",
+
+      "Documentation", "Refactor", "Style", "Test", "Chore", or "Revert".
+      Provide a bullet-point list,
+
+      e.g., "- New Feature: Added search functionality to the UI". Limit your
+      response to 50-100 words
+
+      and emphasize features visible to the end-user while omitting code-level
+      details.
   language:
     required: false
     description: ISO code for the response language
@@ -231,41 +243,7 @@ inputs:
     required: false
     description: 'The icon for the bot'
     default: '<img src="https://avatars.githubusercontent.com/in/347564?s=41" alt="Image description" width="20" height="20">'
-  secrets:
-    GIT_TOKEN:
-      required: true
-    OPENAI_API_KEY:
-      required: true
-# runs:
-#   using: 'node16'
-#   main: 'dist/index.js'
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
 
-permissions:
-  contents: read
-  pull-requests: write
-'on':
-  pull_request: null
-  pull_request_review_comment:
-    types:
-      - created
-concurrency:
-  group: >-
-    ${{ github.repository }}-${{ github.event.number || github.head_ref ||
-    github.sha }}-${{ github.workflow }}-${{ github.event_name ==
-    'pull_request_review_comment' && 'pr_comment' || 'pr' }}
-  cancel-in-progress: '${{ github.event_name != ''pull_request_review_comment'' }}'
-jobs:
-  review:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: coderabbitai/ai-pr-reviewer@latest
-        env:
-          GITHUB_TOKEN: '${{ secrets.GIT_TOKEN }}'
-          OPENAI_API_KEY: '${{ secrets.OPENAI_API_KEY }}'
-        with:
-          debug: true
-          review_simple_changes: true
-          review_comment_lgtm: true
-# runs:
-#   using: 'node16'
-#   main: 'dist/index.js'
