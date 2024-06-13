@@ -200,7 +200,11 @@ inputs:
       Do not comment on minor code style issues, missing 
       comments/documentation. Identify and resolve significant 
       concerns to improve overall code quality while deliberately 
-      disregarding minor issues.
+      disregarding minor issues.on:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+  pull_request_review_comment:
+    types: [created]
   summarize:
     required: false
     description: 'The prompt for final summarization response'
@@ -243,7 +247,15 @@ inputs:
     required: false
     description: 'The icon for the bot'
     default: '<img src="https://avatars.githubusercontent.com/in/347564?s=41" alt="Image description" width="20" height="20">'
+
 runs:
   using: 'node16'
   main: 'dist/index.js'
+
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+  pull_request_review_comment:
+    types: [created]
 
