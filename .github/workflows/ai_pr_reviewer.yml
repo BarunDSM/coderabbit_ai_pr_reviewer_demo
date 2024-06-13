@@ -23,14 +23,14 @@ jobs:
     steps:
       - name : Run node16
         run: echo "hello"
-      - name : Checkout code
-        uses: coderabbitai/ai-pr-reviewer@latest
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        with:
-          debug: true
-          review_simple_changes: false
-          review_comment_lgtm: false
+      # - name : Checkout code
+      #   uses: coderabbitai/ai-pr-reviewer@latest
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      #   with:
+      #     debug: true
+      #     review_simple_changes: false
+      #     review_comment_lgtm: false
       # - name : Run node16
       #   run: echo "hello"
