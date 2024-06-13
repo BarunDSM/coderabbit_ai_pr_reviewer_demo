@@ -24,6 +24,10 @@ jobs:
   review:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+      - uses: actions/checkout@v4
+
+      - name: Code reviewer
       - uses: coderabbitai/ai-pr-reviewer@latest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -32,4 +36,3 @@ jobs:
           debug: true
           review_simple_changes: false
           review_comment_lgtm: false
-          openai_light_model: gpt-3.5-turbo
