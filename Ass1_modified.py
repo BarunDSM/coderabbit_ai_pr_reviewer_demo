@@ -1,106 +1,94 @@
-
 import json
 from fastapi import FastAPI, Depends, HTTPException
 from pydantic import BaseModel
 import random
+from typing import Dict, Any
 
 FILE_NAME = "test.json"
 
+# Returns dictionary read from the json file
+def get_user_data() -> Dict[int, Any]:
+    try:
+        with open(FILE_NAME, 'r') as j_file:
+            return json.load(j_file)
+    except FileNotFoundError:
+        return {}
+    except json.JSONDecodeError:
+        return {}
 
-#returns dictionary read from the json file
-def get_user_data():
-    with open(FILE_NAME) as j_file:
-        return json.load(j_file)
+# Saves the dictionary back to the json file
+def save_user_data(data: Dict[int, Any]) -> None:
+    with open(FILE_NAME, 'w') as out_file:
+        json.dump(data, out_file, indent=2)
 
-
-# user class defining their attributes
-class user_data(BaseModel):
-    username:str
+# User class defining their attributes
+class UserData(BaseModel):
+    username: str
     email: str
     password: str
 
-
 app = FastAPI()
 
-
-# create a new user account
+# Create a new user account
 @app.post("/create")
+async def create(new_user: UserData, data: Dict[int, Any] = Depends(get_user_data)):
+    available_ids = [i for i in range(1000, 10000) if i not in data]
 
-# using fastapi dependency injections for the dictonary
-async def create(new_user:user_data, d : dict=Depends(get_user_data)): 
-
-    l=[i for i in range(1000,10000) if i not in d.keys()]
-
-    # empty list
-    if not l:
-        return {"status": "failure",
-                "message": "no more users accepting"}
-    
-    new_id = random.choice(l)
-    
-    d[new_id] = dict(new_user)
-
-    # dump the new user created into our json file
-    with open (FILE_NAME,'w+') as out:
-        json.dump(d, out, indent=2)
-
-    #json response
-    return {"status": "success",
-            "user_id": new_id,
-            "message": "Your account is succesfully created"
+    if not available_ids:
+        return {
+            "status": "failure",
+            "message": "No more users can be accepted"
         }
 
+    new_id = random.choice(available_ids)
+    data[new_id] = new_user.dict()
 
+    save_user_data(data)
 
-# get/print details of an existing user
+    return {
+        "status": "success",
+        "user_id": new_id,
+        "message": "Your account is successfully created"
+    }
+
+# Get details of an existing user
 @app.get("/get/{user_id}")
-async def get(user_id ,d : dict=Depends(get_user_data) ):
+async def get(user_id: int, data: Dict[int, Any] = Depends(get_user_data)):
+    if user_id not in data:
+        raise HTTPException(status_code=404, detail=f"No user with user id {user_id}")
 
-    # Underflow check
-    if user_id not in d:
-        raise HTTPException(status_code=404, detail = f"No user with user id {user_id}")
+    return {
+        "status": "success",
+        "message": "Your account details are",
+        "data": data[user_id]
+    }
 
-    
-    return {"staus":"success","message":"Your account details are"}, d[user_id]
-
-# updating details of an existing user
+# Update details of an existing user
 @app.patch("/update/{user_id}")
-async def update(user_id, user:user_data , d : dict=Depends(get_user_data)):
+async def update(user_id: int, user: UserData, data: Dict[int, Any] = Depends(get_user_data)):
+    if user_id not in data:
+        raise HTTPException(status_code=404, detail=f"No user with user id {user_id}")
 
-    # Underflow check
-    if user_id not in d:
-        raise HTTPException(status_code=404, detail = f"No user with user id {user_id}")
-    
-    d[user_id] = dict(user)
+    data[user_id] = user.dict()
+    save_user_data(data)
 
-    # dump the updates in our json file
-    with open (FILE_NAME,'w+') as out:
-        json.dump(d, out, indent=2)
+    return {
+        "status": "success",
+        "user_id": user_id,
+        "message": "Your details are updated successfully"
+    }
 
-    return {"status": "success",
-            "user_id":user_id,
-            "message": "Your details are updated succesfully"
-        }
-
-
-# delete an existing user account
+# Delete an existing user account
 @app.delete("/delete/{user_id}")
-async def delete(user_id , d : dict=Depends(get_user_data)):
+async def delete(user_id: int, data: Dict[int, Any] = Depends(get_user_data)):
+    if user_id not in data:
+        raise HTTPException(status_code=404, detail=f"No user with user id {user_id}")
 
-    # Underflow check
-    if user_id not in d:
-        raise HTTPException(status_code=404, detail = f"No user with user id {user_id}")
-    
-    del d[user_id]
+    del data[user_id]
+    save_user_data(data)
 
-    # dump updates in our json file
-    with open (FILE_NAME,'w+') as out:
-        json.dump(d, out, indent=2)
-
-    return {"status": "success",
-            "user_id": user_id,
-            "message": "Your account is now deleted"
-        }
-
-
-
+    return {
+        "status": "success",
+        "user_id": user_id,
+        "message": "Your account is now deleted"
+    }
