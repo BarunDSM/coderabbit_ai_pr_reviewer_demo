@@ -5,11 +5,10 @@ permissions:
   pull-requests: write
 
 on:
-  pull_request_target:
-    types: [labeled]
+  pull_request:
   pull_request_review_comment:
     types: [created]
-run-name: ${{ github.workflow }} (${{ github.ref_name }}) / ${{ github.event_name }}
+# run-name: ${{ github.workflow }} (${{ github.ref_name }}) / ${{ github.event_name }}
 concurrency:
   group:
     ${{ github.repository }}-${{ github.event.number || github.head_ref ||
@@ -21,9 +20,6 @@ jobs:
   review:
     runs-on: ubuntu-latest
     steps:
-      - name: chekout repo
-        uses: actions/checkout@v4
-      
       - uses: coderabbitai/ai-pr-reviewer@latest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
