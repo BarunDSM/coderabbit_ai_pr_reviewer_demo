@@ -83,7 +83,6 @@ async def update(user_id: int, user: UserData, data: Dict[int, Any] = Depends(ge
 async def delete(user_id: int, data: Dict[int, Any] = Depends(get_user_data)):
     if user_id not in data:
         raise HTTPException(status_code=404, detail=f"No user with user id {user_id}")
-
     del data[user_id]
     save_user_data(data)
 
