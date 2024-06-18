@@ -10,7 +10,7 @@ pull request and review comments.
 ## Install instructions
 
 `ai-pr-reviewer` runs as a GitHub Action. Add the below file to your repository
-at `.github/workflows/ai-pr-reviewer.yml`
+at `.github/workflows/ai-pr-reviewer.yml`, you may set the features true according to your need
 
 ```yaml
 name: Code Review
