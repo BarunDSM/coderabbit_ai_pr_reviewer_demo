@@ -56,10 +56,11 @@ jobs:
 
 ### Prompts & Configuration
 
-See: [action.yml]()
+To get an idea of all actions,see: [action.yml]()
+Then add/change these action under jobs(with) section in the action.
 
-Tip: You can change the bot personality by configuring the `system_message`
-value. For example, to review docs/blog posts, you can use the following prompt:
+Following are some prompt suggestions that you may take reference from-
+
 
 <details>
 <summary>Blog Reviewer Prompt</summary>
