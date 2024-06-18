@@ -58,7 +58,7 @@ jobs:
 
 To get an idea of all actions,see: [action.yml](actions.yml)
 
-Then add/change these action under jobs(with) section in the action.
+Then add/change these action under jobs(with) section in the workflow.
 
 Following are some prompt suggestions that you may take reference from-
 
