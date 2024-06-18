@@ -1,4 +1,4 @@
-# Coderabbit ai_pr_reviwer
+# Coderabbit ai_pr_reviewer
 
 ## Overview
 
