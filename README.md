@@ -87,7 +87,7 @@ summarize: Provide your final response in markdown with the following content:
 <summary>Summary without poem</summary>
 
 ```yaml
-# Note: This will only work added summary under the jobs of the workflow action
+# Note: This will only work if you have added summary under the jobs(with) section of the workflow and will not change the default code rabbit response
 summarize: |
       Provide your final response in markdown with the following content:
 
@@ -96,7 +96,7 @@ summarize: |
       - **Changes**: A markdown table of files and their summaries. Group files 
         with similar changes together into a single row to save space.
 
-      ## simply remove poem section from here, check summarize in [action.yml](actions.yml) 
+      ## simply remove poem section from here, check summarize in action.yml
 
       Avoid additional commentary as this summary will be added as a comment on the 
       GitHub pull request. Use the titles "Walkthrough" and "Changes" and they must be H2.
