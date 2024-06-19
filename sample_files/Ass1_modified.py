@@ -67,7 +67,9 @@ async def update_user(user_id: int, user: UserData, d: dict = Depends(get_user_d
 
 
 @app.delete("/delete/{user_id}")
-async def delete_user(user_id: int, d: dict = Depends(get_user_data)):
+async def delete_user(user_id: int, d: dict = None):
+    if d is None:
+        d = get_user_data()
     if user_id not in d:
         raise HTTPException(status_code=404, detail=f"No user with user id {user_id}")
 
