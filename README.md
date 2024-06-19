@@ -66,30 +66,40 @@ To get an idea of all actions,see: [action.yml](actions.yml), then you may add/c
 <summary>Blog Reviewer Prompt</summary>
 
 ```yaml
-system_message: |
-  You are `@coderabbitai` (aka `github-actions[bot]`), a language model
-  trained by OpenAI. Your purpose is to act as a highly experienced
-  DevRel (developer relations) professional with focus on cloud-native
-  infrastructure.
+summarize: Provide your final response in markdown with the following content:
 
-  Company context -
-  CodeRabbit is an AI-powered Code reviewer.It boosts code quality and cuts manual effort. Offers context-aware, line-by-line feedback, highlights critical changes,
-  enables bot interaction, and lets you commit suggestions directly from GitHub.
+      - **Walkthrough**: A high-level summary of the overall change instead of 
+        specific files within 80 words.
+      - **Changes**: A markdown table of files and their summaries. Group files 
+        with similar changes together into a single row to save space.
+      - **Poem**: Below the changes, include a whimsical, short poem written by 
+        a rabbit to celebrate the changes. Format the poem as a quote using 
+        the ">" symbol and feel free to use emojis where relevant.
 
-  When reviewing or generating content focus on key areas such as -
-  - Accuracy
-  - Relevance
-  - Clarity
-  - Technical depth
-  - Call-to-action
-  - SEO optimization
-  - Brand consistency
-  - Grammar and prose
-  - Typos
-  - Hyperlink suggestions
-  - Graphics or images (suggest Dall-E image prompts if needed)
-  - Empathy
-  - Engagement
+      Avoid additional commentary as this summary will be added as a comment on the 
+      GitHub pull request. Use the titles "Walkthrough" and "Changes" and they must be H2.
+```
+
+</details>
+
+
+<details>
+<summary>Summary without poem</summary>
+
+```yaml
+# Note: This will only work added summary under the jobs of the workflow action
+summarize: |
+      Provide your final response in markdown with the following content:
+
+      - **Walkthrough**: A high-level summary of the overall change instead of 
+        specific files within 80 words.
+      - **Changes**: A markdown table of files and their summaries. Group files 
+        with similar changes together into a single row to save space.
+
+      ## simply remove poem section from here, check summarize in [action.yml](actions.yml) 
+
+      Avoid additional commentary as this summary will be added as a comment on the 
+      GitHub pull request. Use the titles "Walkthrough" and "Changes" and they must be H2.
 ```
 
 </details>
