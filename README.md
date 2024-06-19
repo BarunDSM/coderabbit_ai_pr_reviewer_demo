@@ -57,11 +57,9 @@ jobs:
 
 ### Prompts & Configuration
 
-To get an idea of all actions,see: [action.yml](actions.yml)
+To get an idea of all actions,see: [action.yml](actions.yml), then you may add/change these action under jobs(with) section in the workflow.
 
-Then add/change these action under jobs(with) section in the workflow.
-
-Following are some prompt suggestions that you may take reference from-
+**Following are some prompt suggestions that you may take reference from**:
 
 
 <details>
