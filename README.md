@@ -115,3 +115,26 @@ summarize: |
 ```
 
 </details>
+
+
+<details>
+<summary>Summary for each functionalities/code altered</summary>
+
+```yaml
+# Note: This will only work if you have added summary under the jobs(with) section of the workflow and will not change the default code rabbit response
+summarize: |
+  Provide your final response in markdown with the following content:
+  
+  - **Walkthrough**: A high-level summary of the overall change instead of 
+  specific files within max 150 words.
+  - **Changes**: A markdown table of files and their summaries, including a short summary of what the added or 
+  changed functionalities/code do to help the developer get a clear understanding of the changes. 
+  Group files with similar changes together into a single row to save space.
+            
+  
+  Avoid additional commentary as this summary will be added as a comment on the 
+  GitHub pull request. Use the titles "Walkthrough" and "Changes" and they must be H2.
+```
+
+</details>
+
