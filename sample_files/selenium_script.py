@@ -1,63 +1,50 @@
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 
-# Initialize the WebDriver
+from selenium import webdriver
+import time
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+
+# Setup WebDriver
 driver = webdriver.Chrome()
 
 try:
     # Open the first page
-    url1 = "http://127.0.0.1:8090/"
-    driver.get(url1)
+    driver.get("http://127.0.0.1:8090/")
+    time.sleep(2)
 
-    # Wait until the username input is present and interact with it
-    WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.ID, "username"))
-    ).send_keys("admin")
+    # Find elements and interact with them
+    username_input = driver.find_element(By.ID, "username")
+    username_input.send_keys("admin")
+    time.sleep(1)
 
-    # Interact with the password input
-    WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.ID, "password"))
-    ).send_keys("password")
+    password_input = driver.find_element(By.ID, "password")
+    password_input.send_keys("admin123")
+    time.sleep(1)
 
-    # Click the login button
-    WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.XPATH, "//button[@type='submit']"))
-    ).click()
-
-    # Wait for the next page to load (if necessary)
-    WebDriverWait(driver, 10).until(
-        EC.url_changes(url1)
-    )
+    login_button = driver.find_element(By.XPATH, "//button[@type='submit']")
+    login_button.click()
+    time.sleep(2)
 
     # Open the second page
-    url2 = "http://127.0.0.1:8090/data_entry.html"
-    driver.get(url2)
+    driver.get("http://127.0.0.1:8090/data_entry.html")
+    time.sleep(2)
 
-    # Interact with the regd_input field
-    WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.ID, "data1"))
-    ).send_keys("123456")
+    # Find elements and interact with them
+    regd_input = driver.find_element(By.ID, "data1")
+    regd_input.send_keys("123456")
+    time.sleep(1)
 
-    # Interact with the sem_input field
-    WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.ID, "data2"))
-    ).send_keys("Spring 2022")
+    sem_input = driver.find_element(By.ID, "data2")
+    sem_input.send_keys("Spring 2022")
+    time.sleep(1)
 
-    # Click the submit button
-    WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.XPATH, "//button[@type='submit']"))
-    ).click()
-
-    # Optionally, wait for some confirmation or result after submitting the form
-    WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.ID, "success_message"))  # Adjust the locator as per your page
-    )
+    submit_button = driver.find_element(By.XPATH, "//button[@type='submit']")
+    submit_button.click()
+    time.sleep(2)
 
 except Exception as e:
     print(e)
 
 finally:
-    # Close the WebDriver
+    # Close the browser
     driver.quit()
