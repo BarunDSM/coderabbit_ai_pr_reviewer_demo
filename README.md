@@ -63,7 +63,7 @@ To get an idea of all actions,see: [action.yml](actions.yml), then you may add/c
 
 
 <details>
-<summary>Blog Reviewer Prompt</summary>
+<summary>Reviewer Prompt</summary>
 
 ```yaml
 system_message: |
@@ -94,34 +94,11 @@ system_message: |
 
 </details>
 
-
 <details>
-<summary>Summary without poem</summary>
+<summary>Add your own personal summaizer</summary>
 
 ```yaml
-# Note: This will only work if you have added summary under the jobs(with) section of the workflow and will not change the default code rabbit response
-summarize: |
-      Provide your final response in markdown with the following content:
-
-      - **Walkthrough**: A high-level summary of the overall change instead of 
-        specific files within 80 words.
-      - **Changes**: A markdown table of files and their summaries. Group files 
-        with similar changes together into a single row to save space.
-
-      ## simply remove poem section from here, check summarize in action.yml
-
-      Avoid additional commentary as this summary will be added as a comment on the 
-      GitHub pull request. Use the titles "Walkthrough" and "Changes" and they must be H2.
-```
-
-</details>
-
-
-<details>
-<summary>Summary for each functionalities/code altered</summary>
-
-```yaml
-# Note: This will only work if you have added summary under the jobs(with) section of the workflow and will not change the default code rabbit response
+# Note: Apart from the default summary provided by coderabbit, you can add your own with prompts of your choice 
 summarize: |
   Provide your final response in markdown with the following content:
   
@@ -138,3 +115,54 @@ summarize: |
 
 </details>
 
+### CodeRabbit Configration File (`.coderabbit.yaml`)
+
+- You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
+- Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
+- If your editor has YAML language server enabled, you can add the path at the top of this file to enable auto-completion and validation: `# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json`
+
+
+<details>
+<summary>Tips</summary>
+
+### Chat
+
+There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
+
+- Review comments: Directly reply to a review comment made by CodeRabbit. Example:
+	- `I pushed a fix in commit <commit_id>.`
+	- `Generate unit testing code for this file.`
+	- `Open a follow-up GitHub issue for this discussion.`
+- Files and specific lines of code (under the "Files changed" tab): Tag `@coderabbitai` in a new review comment at the desired location with your query. Examples:
+	- `@coderabbitai generate unit testing code for this file.`
+	-	`@coderabbitai modularize this function.`
+- PR comments: Tag `@coderabbitai` in a new PR comment to ask questions about the PR branch. For the best results, please provide a very specific query, as very limited context is provided in this mode. Examples:
+	- `@coderabbitai generate interesting stats about this repository and render them as a table.`
+	- `@coderabbitai show all the console.log statements in this repository.`
+	- `@coderabbitai read src/utils.ts and generate unit testing code.`
+	- `@coderabbitai read the files in the src/scheduler package and generate a class diagram using mermaid and a README in the markdown format.`
+	- `@coderabbitai help me debug CodeRabbit configuration file.`
+
+Note: Be mindful of the bot's finite context window. It's strongly recommended to break down tasks such as reading entire modules into smaller chunks. For a focused discussion, use review comments to chat about specific files and their changes, instead of using the PR comments.
+
+### CodeRabbit Commands (invoked as PR comments)
+
+- `@coderabbitai pause` to pause the reviews on a PR.
+- `@coderabbitai resume` to resume the paused reviews.
+- `@coderabbitai review` to trigger an incremental review. This is useful when automatic reviews are disabled for the repository.
+- `@coderabbitai full review` to do a full review from scratch and review all the files again.
+- `@coderabbitai summary` to regenerate the summary of the PR.
+- `@coderabbitai resolve` resolve all the CodeRabbit review comments.
+- `@coderabbitai configuration` to show the current CodeRabbit configuration for the repository.
+- `@coderabbitai help` to get help.
+
+
+Additionally, you can add `@coderabbitai ignore` anywhere in the PR description to prevent this PR from being reviewed.
+
+</details>
+
+<!-- tips_end -->
+
+### Documentation 
+
+- Visit CodeRabbit's documentation [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
