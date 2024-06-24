@@ -55,7 +55,7 @@ jobs:
   Please add these keys to your GitHub Action secrets.
 
 
-### Prompts & Configuration
+## Prompts & Configuration
 
 To get an idea of all actions,see: [action.yml](actions.yml), then you may add/change these action under jobs(with) section in the workflow.
 
@@ -115,7 +115,7 @@ summarize: |
 
 </details>
 
-### CodeRabbit Configration File (`.coderabbit.yaml`)
+## CodeRabbit Configration File (`.coderabbit.yaml`)
 
 - You can programmatically configure CodeRabbit by adding a `.coderabbit.yaml` file to the root of your repository.
 - Please see the [configuration documentation](https://docs.coderabbit.ai/guides/configure-coderabbit) for more information.
@@ -161,6 +161,6 @@ Additionally, you can add `@coderabbitai ignore` anywhere in the PR description 
 
 <!-- tips_end -->
 
-### Documentation 
+## Documentation 
 
 - Visit CodeRabbit's documentation [Documentation](https://coderabbit.ai/docs) for detailed information on how to use CodeRabbit.
