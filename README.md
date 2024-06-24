@@ -123,9 +123,7 @@ summarize: |
 
 
 <details>
-### <summary>Tips to chat with CodeRabbit</summary>
-
-### Chat
+<summary>Tips to chat with CodeRabbit</summary>
 
 There are 3 ways to chat with [CodeRabbit](https://coderabbit.ai):
 
