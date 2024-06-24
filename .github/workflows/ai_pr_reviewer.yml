@@ -25,18 +25,6 @@ jobs:
           debug: true
           review_simple_changes: true
           review_comment_lgtm: true
-          openai_light_model: gpt-3.5-turbo
-          openai_heavy_model: gpt-4
           openai_timeout_ms: 1200000
           summarize: |
-            Provide your final response in markdown with the following content:
-  
-            - **Walkthrough**: A high-level summary of the overall change instead of 
-              specific files within max 150 words.
-            - **Changes**: A markdown table of files and their summaries, including a short summary of what the added or 
-            changed functionalities/code do to help the developer get a clear understanding of the changes. 
-            Group files with similar changes together into a single row to save space.
-            
-  
-            Avoid additional commentary as this summary will be added as a comment on the 
-            GitHub pull request. Use the titles "Walkthrough" and "Changes" and they must be H2.
+            **Sugesstions** - Write an 80 word para about some sugesstions (if required) in the changes made. 
