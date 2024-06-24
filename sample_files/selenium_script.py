@@ -8,8 +8,7 @@ driver = webdriver.Chrome()
 
 try:
     # Open the first page
-    url1 = "http://127.0.0.1:8090/"
-    driver.get(url1)
+    driver.get("http://127.0.0.1:8090/")
 
     # Wait until the username input is present and interact with it
     WebDriverWait(driver, 10).until(
@@ -19,7 +18,7 @@ try:
     # Interact with the password input
     WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.ID, "password"))
-    ).send_keys("password")
+    ).send_keys("admin123")
 
     # Click the login button
     WebDriverWait(driver, 10).until(
@@ -28,12 +27,11 @@ try:
 
     # Wait for the next page to load (if necessary)
     WebDriverWait(driver, 10).until(
-        EC.url_changes(url1)
+        EC.url_changes("http://127.0.0.1:8090/")
     )
 
     # Open the second page
-    url2 = "http://127.0.0.1:8090/data_entry.html"
-    driver.get(url2)
+    driver.get("http://127.0.0.1:8090/data_entry.html")
 
     # Interact with the regd_input field
     WebDriverWait(driver, 10).until(
