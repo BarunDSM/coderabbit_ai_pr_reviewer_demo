@@ -123,7 +123,7 @@ summarize: |
 
 
 <details>
-<summary>Tips</summary>
+### <summary>Tips to chat with CodeRabbit</summary>
 
 ### Chat
 
