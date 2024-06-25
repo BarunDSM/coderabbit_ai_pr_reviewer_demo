@@ -27,4 +27,4 @@ jobs:
           review_comment_lgtm: true
           openai_timeout_ms: 1200000
           summarize: |
-            **Sugesstions** - Write an 80 word para about some sugesstions (if required) in the changes made. 
+            **Sugesstions** - Write an 80 word para about some sugesstions (if required) in the changes made (give a heading). 
